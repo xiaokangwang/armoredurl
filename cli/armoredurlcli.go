@@ -22,6 +22,10 @@ func main() {
 	for _, transformerName := range transformerNames {
 		var transformer armoredurl.Transformer
 		switch transformerName {
+		case "choco":
+			transformer = &compression.ShocoTransformer{}
+		case "chocopath":
+			transformer = &compression.ShocoPathTransformer{}
 		case "gzip":
 			transformer = &compression.GzipTransformer{}
 		case "base45":
