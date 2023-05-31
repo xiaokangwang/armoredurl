@@ -6,8 +6,10 @@ import (
 	"github.com/xiaokangwang/armoredurl"
 	"github.com/xiaokangwang/armoredurl/checksum"
 	"github.com/xiaokangwang/armoredurl/compression"
+	"github.com/xiaokangwang/armoredurl/dataurl"
 	"github.com/xiaokangwang/armoredurl/encoding"
 	"github.com/xiaokangwang/armoredurl/prefix"
+	"github.com/xiaokangwang/armoredurl/qr"
 	"io"
 	"os"
 	"strings"
@@ -28,12 +30,20 @@ func main() {
 			transformer = &compression.ShocoPathTransformer{}
 		case "gzip":
 			transformer = &compression.GzipTransformer{}
+		case "upper":
+			transformer = &encoding.UppercaseAll{}
+		case "base36":
+			transformer = &encoding.Base36Transformer{}
 		case "base45":
 			transformer = &encoding.Base45Transformer{}
 		case "base64":
 			transformer = &encoding.Base64Transformer{}
 		case "crc32":
 			transformer = &checksum.CRC32Transformer{}
+		case "qr":
+			transformer = &qr.TwoDimCodeTransformer{}
+		case "dataurl":
+			transformer = &dataurl.URLEncoder{}
 		default:
 			if strings.HasPrefix(transformerName, "prefix:") {
 				transformer = &prefix.StaticPrefix{Prefix: transformerName[7:]}
